@@ -16,6 +16,10 @@
       <div class="container nav-content">
         <img src="assets/Logo.png" alt="Whitepace Logo" class="logo" />
 
+        <button class="hamburger">
+          <img src="assets/hamburger.svg" alt="Menu" />
+        </button>
+
         <div class="nav-right">
           <nav class="nav-links">
             <a href="#">
@@ -37,7 +41,10 @@
           </nav>
           <div class="nav-buttons">
             <button class="btn btn-yellow">Login</button>
-            <button class="btn btn-blue">Try Whitepace free →</button>
+            <button class="btn btn-blue">
+              Try Whitepace free
+              <img src="assets/right-arrow.svg" alt="Right Arrow" />
+            </button>
           </div>
         </div>
       </div>
@@ -47,12 +54,18 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-text">
-          <h1>Get More Done with whitepace</h1>
+          <h1>
+            Get More Done
+            <span class="mobile-break">with whitepace</span>
+          </h1>
           <p>
             Project management software that enables your teams to collaborate,
             plan, analyze and manage everyday tasks
           </p>
-          <button class="btn btn-blue">Try Whitepace free →</button>
+          <button class="btn btn-blue">
+            Try Whitepace free
+            <img src="assets/right-arrow.svg" alt="Right Arrow" />
+          </button>
         </div>
         <div class="hero-image">
           <img src="assets/hero-placeholder.png" alt="Hero Illustration" />
@@ -81,7 +94,10 @@
             expressions and diagrams directly from the app. Take photos with the
             mobile app and save them to a note.
           </p>
-          <button class="btn btn-blue">Get Started →</button>
+          <button class="btn btn-blue">
+            Get Started
+            <img src="assets/right-arrow.svg" alt="Right Arrow" />
+          </button>
         </div>
 
         <!-- Right Image Placeholder -->
@@ -120,9 +136,21 @@
             collaborate on them. You can also publish a note to the internet and
             share the URL with others.
           </p>
-          <button class="btn btn-blue">Try it now →</button>
+          <button class="btn btn-blue">
+            Try it now
+            <img src="assets/right-arrow.svg" alt="Right Arrow" />
+          </button>
         </div>
       </div>
     </section>
+
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const navRight = document.querySelector(".nav-right");
+
+      hamburger.addEventListener("click", () => {
+        navRight.classList.toggle("active");
+      });
+    </script>
   </body>
 </html>
