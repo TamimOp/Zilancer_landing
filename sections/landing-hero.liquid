@@ -1,225 +1,184 @@
 {% comment %}
-  Landing Hero – configurable Shopify section
-  - Heading, subheading, body
-  - Primary / Secondary buttons
-  - Image picker for main visual
-  - Repeater blocks: badges, features
+  Landing Hero – Whitepace style hero section
 {% endcomment %}
 
-<section id="landing-hero-{{ section.id }}" class="landing-hero" role="region" aria-label="Landing hero">
-  <div class="lh__container">
-    <div class="lh__left">
-      {% if section.settings.eyebrow != blank %}
-        <p class="lh__eyebrow">{{ section.settings.eyebrow }}</p>
-      {% endif %}
+<section class="hero" role="region" aria-label="Hero section">
+  <div class="container hero-grid">
+    <div class="hero-text">
       {% if section.settings.heading != blank %}
-        <h2 class="lh__title">{{ section.settings.heading }}</h2>
-      {% endif %}
-      {% if section.settings.subheading != blank %}
-        <p class="lh__subtitle">{{ section.settings.subheading }}</p>
-      {% endif %}
-      {% if section.settings.body != blank %}
-        <div class="lh__body">{{ section.settings.body }}</div>
-      {% endif %}
-
-      <div class="lh__actions">
-        {% if section.settings.primary_label != blank and section.settings.primary_url != blank %}
-          <a class="lh__btn lh__btn--primary" href="{{ section.settings.primary_url }}">{{ section.settings.primary_label }}</a>
-        {% endif %}
-        {% if section.settings.secondary_label != blank and section.settings.secondary_url != blank %}
-          <a class="lh__btn lh__btn--ghost" href="{{ section.settings.secondary_url }}">{{ section.settings.secondary_label }}</a>
-        {% endif %}
-      </div>
-
-      {% if section.blocks.size > 0 %}
-        <ul class="lh__badges" role="list">
-          {% for block in section.blocks %}
-            {% if block.type == 'badge' %}
-              <li>{{ block.settings.text }}</li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-      {% endif %}
-    </div>
-
-    <div class="lh__right">
-      {% if section.settings.image != blank %}
-        <picture class="lh__device">
-          <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.image.alt | escape }}" loading="lazy">
-        </picture>
-      {% endif %}
-
-      {% for block in section.blocks %}
-        {% if block.type == 'stat' %}
-          <div class="lh__floating-card" {{ block.shopify_attributes }}>
-            <span class="dot"></span>
-            <div>
-              <h3>{{ block.settings.title }}</h3>
-              <p>{{ block.settings.caption }}</p>
-            </div>
-          </div>
-        {% endif %}
-      {% endfor %}
-
-      {% for block in section.blocks %}
-        {% if block.type == 'floating_badge' %}
-          <div class="lh__floating-badge" {{ block.shopify_attributes }}>
-            {{ block.settings.text }}
-          </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-
-  <div class="lh__strip">
-    {% for block in section.blocks %}
-      {% if block.type == 'feature' %}
-        <article class="lh__card" {{ block.shopify_attributes }}>
-          {% if block.settings.icon != blank %}
-            <img class="lh__icon" src="{{ block.settings.icon | image_url: width: 64 }}" alt="" role="presentation" loading="lazy">
+        <h1>
+          {{ section.settings.heading }}
+          {% if section.settings.heading_highlight != blank %}
+            <span class="mobile-break">{{ section.settings.heading_highlight }}</span>
           {% endif %}
-          <h3>{{ block.settings.title }}</h3>
-          <p>{{ block.settings.text }}</p>
-        </article>
+        </h1>
       {% endif %}
-    {% endfor %}
+      
+      {% if section.settings.description != blank %}
+        <p>{{ section.settings.description }}</p>
+      {% endif %}
+      
+      {% if section.settings.cta_text != blank and section.settings.cta_url != blank %}
+        <a href="{{ section.settings.cta_url }}" class="btn btn-blue">
+          {{ section.settings.cta_text }}
+          {% if section.settings.show_arrow %}
+            <img src="{{ 'right-arrow.svg' | asset_url }}" alt="Right Arrow" />
+          {% endif %}
+        </a>
+      {% endif %}
+    </div>
+    
+    <div class="hero-image">
+      {% if section.settings.hero_image != blank %}
+        <img 
+          src="{{ section.settings.hero_image | image_url: width: 1200 }}" 
+          alt="{{ section.settings.hero_image.alt | default: 'Hero Illustration' | escape }}" 
+          loading="lazy"
+        />
+      {% else %}
+        <img src="{{ 'hero-placeholder.png' | asset_url }}" alt="Hero Illustration" />
+      {% endif %}
+    </div>
   </div>
-
-  <style>
-  #shopify-section-{{ section.id }} {
-    --bg: {{ section.settings.bg | default: '#0b0d12' }};
-    --card: {{ section.settings.card | default: '#121521' }};
-    --muted: {{ section.settings.muted | default: '#1a1f2e' }};
-    --text: {{ section.settings.text_color | default: '#e7ecff' }};
-    --subtle: {{ section.settings.subtle | default: '#a5b0d6' }};
-    --accent: {{ section.settings.accent | default: '#7c5cff' }};
-    --primary: {{ section.settings.primary | default: '#5d7dff' }};
-    --ring: rgba(124,92,255,.35);
-    --radius-xl: 24px; --radius-lg: 16px; --radius-md: 12px;
-    --container: 1140px; --gutter: 24px;
-    color: var(--text);
-    background: radial-gradient(80vw 80vw at 80% 10%, var(--muted), transparent 60%) , var(--bg);
-  }
-  #shopify-section-{{ section.id }} .landing-hero{ padding: clamp(40px, 6vw, 96px) 0; }
-  #shopify-section-{{ section.id }} .lh__container{
-    width: min(100% - 2*var(--gutter), var(--container)); margin-inline:auto;
-    display:grid; grid-template-columns: 1.15fr .85fr; gap: clamp(24px,4vw,48px); align-items:center;
-  }
-  #shopify-section-{{ section.id }} .lh__eyebrow{
-    display:inline-block; font-weight: 600; font-size:.85rem; letter-spacing:.06em; text-transform:uppercase;
-    color: var(--subtle);
-    background: color-mix(in srgb, var(--muted) 60%, transparent);
-    border: 1px solid color-mix(in srgb, var(--subtle) 30%, transparent);
-    padding: .35rem .6rem; border-radius: 999px;
-    margin: 0 0 8px;
-  }
-  #shopify-section-{{ section.id }} .lh__title{ font-size: clamp(32px, 5vw, 56px); line-height:1.05; margin:12px 0 10px; font-weight:800; }
-  #shopify-section-{{ section.id }} .lh__subtitle{ color: var(--subtle); font-size: clamp(15px,1.6vw,18px); margin:0 0 12px; }
-  #shopify-section-{{ section.id }} .lh__body{ color: var(--subtle); max-width: 60ch; margin: 0 0 16px; }
-  #shopify-section-{{ section.id }} .lh__actions{ display:flex; gap:12px; margin: 6px 0 12px; }
-  #shopify-section-{{ section.id }} .lh__btn{
-    display:inline-flex; align-items:center; justify-content:center; padding:.85rem 1.1rem;
-    border-radius: var(--radius-md); text-decoration:none; color: var(--text);
-    border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
-    transition: transform .15s ease, box-shadow .15s ease, background .2s ease;
-  }
-  #shopify-section-{{ section.id }} .lh__btn:focus-visible{ outline:none; box-shadow: 0 0 0 4px var(--ring); }
-  #shopify-section-{{ section.id }} .lh__btn--primary{ background: linear-gradient(180deg, var(--primary), var(--accent)); }
-  #shopify-section-{{ section.id }} .lh__btn--ghost{ background: transparent; }
-
-  #shopify-section-{{ section.id }} .lh__badges{ margin:10px 0 0; padding-left:1.1rem; color: var(--subtle); }
-
-  #shopify-section-{{ section.id }} .lh__right{ position:relative; aspect-ratio: 4/5; display:grid; place-items:center; }
-  #shopify-section-{{ section.id }} .lh__device{
-    width: min(520px, 90%);
-    background: linear-gradient(180deg, #0f1320, #0b0d12);
-    border: 1px solid #252b3f; border-radius: var(--radius-xl);
-    padding: 14px;
-    box-shadow: 0 40px 120px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.04);
-  }
-  #shopify-section-{{ section.id }} .lh__device img{ width:100%; display:block; border-radius: calc(var(--radius-xl) - 10px); }
-  #shopify-section-{{ section.id }} .lh__floating-card{
-    position:absolute; bottom: 8%; left: -4%;
-    display:grid; grid-auto-flow: column; align-items:center; gap:10px;
-    background: var(--card); border: 1px solid #262a3a; border-radius: var(--radius-lg);
-    padding: .7rem .9rem; box-shadow: 0 10px 30px rgba(0,0,0,.35);
-  }
-  #shopify-section-{{ section.id }} .lh__floating-card .dot{ width:10px; height:10px; border-radius: 999px; background:#33d69f; display:inline-block; }
-  #shopify-section-{{ section.id }} .lh__floating-card h3{ margin:0; font-size:16px; }
-  #shopify-section-{{ section.id }} .lh__floating-card p{ margin:0; font-size:12px; color: var(--subtle); }
-  #shopify-section-{{ section.id }} .lh__floating-badge{
-    position:absolute; top: 8%; right: -4%; background:#1b1f30; border:1px solid #313852;
-    padding:.5rem .8rem; border-radius:999px; font-weight:600; font-size:.9rem;
-  }
-  #shopify-section-{{ section.id }} .lh__strip{
-    width: min(100% - 2*var(--gutter), var(--container)); margin: clamp(24px,5vw,42px) auto 0;
-    display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 16px;
-  }
-  #shopify-section-{{ section.id }} .lh__card{
-    background: var(--card); border: 1px solid #242b42; border-radius: var(--radius-lg); padding: 18px 16px;
-  }
-  #shopify-section-{{ section.id }} .lh__card h3{ margin: 0 0 6px; }
-  #shopify-section-{{ section.id }} .lh__card p{ margin: 0; color: var(--subtle); }
-  #shopify-section-{{ section.id }} .lh__icon{ width: 28px; height: 28px; margin-bottom: 8px; }
-
-  @media (max-width: 1024px){
-    #shopify-section-{{ section.id }} .lh__container{ grid-template-columns:1fr; }
-    #shopify-section-{{ section.id }} .lh__right{ order: -1; aspect-ratio: auto; }
-    #shopify-section-{{ section.id }} .lh__floating-card{ left:4%; bottom:-4%; }
-    #shopify-section-{{ section.id }} .lh__floating-badge{ right:4%; top:-4%; }
-  }
-  @media (max-width: 640px){
-    #shopify-section-{{ section.id }} .lh__actions{ flex-direction: column; align-items: stretch; }
-    #shopify-section-{{ section.id }} .lh__strip{ grid-template-columns: 1fr; }
-  }
-  </style>
 </section>
+
+<style>
+  /* Use existing CSS variables and inherit from main stylesheet */
+  .hero {
+    background-color: var(--blue, #043873);
+    background-image: url("{{ 'hero-vector.png' | asset_url }}");
+    background-size: cover;
+    background-position: center;
+    padding: 80px 0;
+    color: var(--white, #ffffff);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .hero-text h1 {
+    font-size: 64px;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+
+  .hero-text p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    font-weight: 400;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    background-color: #c4defd;
+  }
+
+  .mobile-break {
+    display: inline;
+  }
+
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .hero-text h1 {
+      font-size: 36px;
+    }
+
+    .hero-text p {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero {
+      padding: 40px 0;
+    }
+
+    .hero-text h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 100%;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      line-height: 30px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .mobile-break {
+      display: block;
+      margin-top: 15px;
+    }
+
+    .hero-image img {
+      margin-bottom: 32px;
+      margin-top: 8px;
+    }
+  }
+</style>
 
 {% schema %}
 {
-  "name": "Landing Hero",
+  "name": "Hero Section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New • Product Feature" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Build clean, responsive sections fast." },
-    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Flexible Shopify section that mirrors modern SaaS landing patterns." },
-    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Swap text, colors and images to match the mockup. Fully responsive and accessible out of the box.</p>" },
-    { "type": "image_picker", "id": "image", "label": "Main image" },
-    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "Get started" },
-    { "type": "url", "id": "primary_url", "label": "Primary button link" },
-    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Learn more" },
-    { "type": "url", "id": "secondary_url", "label": "Secondary button link" },
-
-    { "type": "color", "id": "bg", "label": "Background", "default": "#0b0d12" },
-    { "type": "color", "id": "card", "label": "Card", "default": "#121521" },
-    { "type": "color", "id": "muted", "label": "Muted", "default": "#1a1f2e" },
-    { "type": "color", "id": "text_color", "label": "Text", "default": "#e7ecff" },
-    { "type": "color", "id": "subtle", "label": "Subtle", "default": "#a5b0d6" },
-    { "type": "color", "id": "accent", "label": "Accent", "default": "#7c5cff" },
-    { "type": "color", "id": "primary", "label": "Primary", "default": "#5d7dff" }
-  ],
-  "blocks": [
-    { "type": "badge", "name": "Badge", "limit": 6,
-      "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "No-code friendly" } ]
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "Get More Done"
     },
-    { "type": "stat", "name": "Floating stat", "limit": 2,
-      "settings": [
-        { "type": "text", "id": "title", "label": "Title", "default": "98.4% Uptime" },
-        { "type": "text", "id": "caption", "label": "Caption", "default": "Last 30 days" }
-      ]
+    {
+      "type": "text",
+      "id": "heading_highlight",
+      "label": "Heading Second Line",
+      "default": "with whitepace"
     },
-    { "type": "floating_badge", "name": "Floating badge", "limit": 2,
-      "settings": [ { "type": "text", "id": "text", "label": "Text", "default": "Trusted by teams" } ]
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Project management software that enables your teams to collaborate, plan, analyze and manage everyday tasks"
     },
-    { "type": "feature", "name": "Feature card", "limit": 6,
-      "settings": [
-        { "type": "image_picker", "id": "icon", "label": "Icon" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Fast" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Lightweight CSS with zero build tools." }
-      ]
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Try Whitepace free"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA Button Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow",
+      "label": "Show arrow in button",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Image"
     }
   ],
   "presets": [
-    { "name": "Landing hero – preset" }
+    {
+      "name": "Hero Section"
+    }
   ]
 }
 {% endschema %}
