@@ -81,13 +81,10 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 219px;
-  height: 63px;
-  opacity: 1;
   gap: 10px;
   border-radius: 8px;
-  padding: 20px;
   border: none;
+  font-size: 18px;
 }
 .btn img {
   width: 14px;
@@ -98,23 +95,17 @@ body {
 
 .btn-yellow {
   background-color: var(--yellow);
-  font-size: 18px;
   width: 126px;
   height: 60px;
-  gap: 10px;
-  opacity: 1;
   padding: 16px 40px;
-  border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
 }
 
 .btn-blue {
   background-color: var(--blue-light);
   color: var(--white);
-  font-size: 18px;
+  width: 219px;
+  height: 63px;
+  padding: 20px;
 }
 
 /* Hero Section */
@@ -150,9 +141,6 @@ body {
   max-width: 100%;
   border-radius: 8px;
   background-color: #c4defd;
-  width: 824;
-  height: 549;
-  opacity: 1;
 }
 
 /* Project Management Section */
@@ -379,12 +367,15 @@ body {
   .nav-buttons {
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
   }
 
   .nav-buttons .btn {
     margin-left: 0;
     width: 80%;
+    height: 45px;
+    padding: 10px 10px;
+    font-size: 16px;
   }
 
   .pm-grid {
@@ -447,24 +438,24 @@ body {
   .nav-buttons {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
     width: 100%;
   }
 
   .nav-buttons .btn {
     margin-left: 0;
-    width: 100%;
+    width: 80%;
+    height: 50px;
+    padding: 10px 10px;
+    font-size: 16px;
   }
 
   .hero-text h1,
   .pm-text h2,
   .wt-text h2 {
-    font-family: Inter;
-    font-weight: 700;
-    font-style: Bold;
     font-size: 36px;
+    font-weight: 700;
     line-height: 100%;
-    letter-spacing: -2%;
     text-align: center;
     margin-bottom: 30px;
   }
@@ -472,31 +463,17 @@ body {
   .hero-text p,
   .pm-text p,
   .wt-text p {
-    font-family: Inter;
-    font-weight: 400;
-    font-style: Regular;
     font-size: 18px;
     line-height: 30px;
-    letter-spacing: -2%;
     text-align: center;
     margin-bottom: 40px;
   }
 
   .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     width: 65%;
     height: 70px;
-    gap: 10px;
     padding: 20px 40px;
-    border-radius: 8px;
-    opacity: 1;
     margin-bottom: 30px;
-  }
-
-  .btn btn-blue {
-    font-size: 18px;
   }
 
   .pm-underline {

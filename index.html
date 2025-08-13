@@ -137,11 +137,15 @@
     </section>
 
     <script>
-      const hamburger = document.querySelector(".hamburger");
-      const navRight = document.querySelector(".nav-right");
+      document.addEventListener("DOMContentLoaded", function () {
+        const hamburger = document.querySelector(".hamburger");
+        const navRight = document.querySelector(".nav-right");
 
-      hamburger.addEventListener("click", () => {
-        navRight.classList.toggle("active");
+        if (hamburger && navRight) {
+          hamburger.addEventListener("click", () => {
+            navRight.classList.toggle("active");
+          });
+        }
       });
     </script>
   </body>
