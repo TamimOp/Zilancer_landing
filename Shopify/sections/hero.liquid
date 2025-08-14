@@ -1,0 +1,221 @@
+<!--
+  This is the Liquid code for the dynamic Hero section.
+  Save this as a file named `sections/hero.liquid` in your theme.
+
+  The schema below defines the settings for all the editable content in the hero banner.
+-->
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get More Done with whitepace"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Project management software that enables your teams to collaborate, plan, analyze and manage everyday tasks"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Try Whitepace free"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Illustration Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Vector Image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+<!--
+  The HTML below is a direct conversion of your index.html's hero section.
+  Static content is replaced with Liquid variables.
+-->
+{% assign hero_bg_url = section.settings.background_image | image_url: width: 1920 %}
+<section class="hero" style="background-image: url('{{ hero_bg_url }}');">
+  <div class="container hero-grid">
+    <div class="hero-text">
+      <h1>
+        {{ section.settings.heading | split: " with" | first }}
+        <span class="mobile-break">with {{ section.settings.heading | split: " with" | last }}</span>
+      </h1>
+      <p>{{ section.settings.subheading }}</p>
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="btn btn-blue">
+          {{ section.settings.button_label }}
+          <img src="https://placehold.co/14x14/FFFFFF/000000?text=→" alt="Right Arrow" />
+        </a>
+      {% endif %}
+    </div>
+    <div class="hero-image">
+      {% if section.settings.hero_image != blank %}
+        <img src="{{ section.settings.hero_image | image_url: width: 800 }}" alt="{{ section.settings.hero_image.alt }}" />
+      {% else %}
+        <img src="https://placehold.co/800x600/C4DEFd/333333?text=Hero+Image" alt="Hero Illustration" />
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!--
+  This is the CSS for the hero section.
+  It's a direct copy of your original styles, adapted to work within this section.
+  It includes all the necessary media queries.
+-->
+<style>
+  :root {
+    --blue: #043873;
+    --blue-light: #4f9cf9;
+    --yellow: #ffe492;
+    --white: #ffffff;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 18px;
+  }
+  .btn img {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin-left: 0;
+  }
+  .btn-blue {
+    background-color: var(--blue-light);
+    color: var(--white);
+    width: 219px;
+    height: 63px;
+    padding: 20px;
+  }
+  .hero {
+    background-color: var(--blue);
+    background-size: cover;
+    background-position: center;
+    padding: 80px 0;
+    color: var(--white);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+  }
+  .hero-text h1 {
+    font-size: 64px;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  .hero-text p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    font-weight: 400;
+  }
+  .hero-image img {
+    max-width: 100%;
+    border-radius: 8px;
+    background-color: #c4defd;
+  }
+
+  /* Responsive */
+  @media (min-width: 1920px) {
+    .container {
+      max-width: 1700px;
+    }
+  }
+  @media (min-width: 1440px) {
+    .container {
+      max-width: 1400px;
+    }
+  }
+  @media (max-width: 1240px) {
+    .container {
+      padding: 0 30px;
+    }
+  }
+  @media (max-width: 968px) {
+    .hero-text h1 {
+      font-size: 48px;
+    }
+  }
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .hero-text h1 {
+      font-size: 36px;
+    }
+    .hero-text p {
+      font-size: 16px;
+    }
+  }
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 15px;
+    }
+    .hero {
+      padding: 40px 0;
+    }
+    .btn {
+      width: 65%;
+      height: 70px;
+      padding: 20px 40px;
+      margin-bottom: 30px;
+    }
+    .hero-text h1 {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 100%;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .hero-text p {
+      font-size: 18px;
+      line-height: 30px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .hero-image img {
+      margin-bottom: 32px;
+      margin-top: 8px;
+    }
+    .mobile-break {
+      display: block;
+      margin-top: 15px;
+    }
+  }
+</style>

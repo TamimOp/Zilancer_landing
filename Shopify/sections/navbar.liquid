@@ -1,0 +1,324 @@
+<!--
+  This is the Liquid code for the dynamic Navbar section.
+  Save this as a file named `sections/navbar.liquid` in your theme.
+
+  The schema below defines the settings for the logo, navigation links, and buttons.
+  A user can edit these settings in the Shopify Theme Editor.
+-->
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo",
+      "info": "Upload the logo for the header."
+    },
+    {
+      "type": "url",
+      "id": "login_link",
+      "label": "Login Button Link"
+    },
+    {
+      "type": "text",
+      "id": "login_label",
+      "label": "Login Button Text",
+      "default": "Login"
+    },
+    {
+      "type": "url",
+      "id": "try_free_link",
+      "label": "Try Free Button Link"
+    },
+    {
+      "type": "text",
+      "id": "try_free_label",
+      "label": "Try Free Button Text",
+      "default": "Try Whitepace free"
+    },
+    {
+      "type": "url",
+      "id": "products_link",
+      "label": "Products Link"
+    },
+    {
+      "type": "url",
+      "id": "solutions_link",
+      "label": "Solutions Link"
+    },
+    {
+      "type": "url",
+      "id": "resources_link",
+      "label": "Resources Link"
+    },
+    {
+      "type": "url",
+      "id": "pricing_link",
+      "label": "Pricing Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
+}
+{% endschema %}
+
+<!--
+  The HTML below is a direct conversion of your index.html's header.
+  Static content is replaced with Liquid variables.
+-->
+<header class="navbar">
+  <div class="container nav-content">
+    {% if section.settings.logo != blank %}
+      <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="Whitepace Logo" class="logo" />
+    {% else %}
+      <img src="https://placehold.co/200x34" alt="Whitepace Logo Placeholder" class="logo" />
+    {% endif %}
+
+    <!-- Hamburger menu button remains static, handled by CSS and JS -->
+    <button class="hamburger">
+      <img src="https://placehold.co/24x24/FFFFFF/000000?text=Menu" alt="Menu" />
+    </button>
+    
+    <div class="nav-right">
+      <nav class="nav-links">
+        <a href="{{ section.settings.products_link }}">
+          Products
+          <img src="https://placehold.co/9x4" alt="" class="nav-arrow" />
+        </a>
+        <a href="{{ section.settings.solutions_link }}">
+          Solutions
+          <img src="https://placehold.co/9x4" alt="" class="nav-arrow" />
+        </a>
+        <a href="{{ section.settings.resources_link }}">
+          Resources
+          <img src="https://placehold.co/9x4" alt="" class="nav-arrow" />
+        </a>
+        <a href="{{ section.settings.pricing_link }}">
+          Pricing
+          <img src="https://placehold.co/9x4" alt="" class="nav-arrow" />
+        </a>
+      </nav>
+      <div class="nav-buttons">
+        {% if section.settings.login_link != blank %}
+          <a href="{{ section.settings.login_link }}" class="btn btn-yellow">{{ section.settings.login_label }}</a>
+        {% endif %}
+        {% if section.settings.try_free_link != blank %}
+          <a href="{{ section.settings.try_free_link }}" class="btn btn-blue">
+            {{ section.settings.try_free_label }}
+            <img src="https://placehold.co/14x14/FFFFFF/000000?text=→" alt="Right Arrow" />
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--
+  This is the CSS for the navbar.
+  It's a direct copy of your original styles, adapted to work within this section.
+  It includes all the necessary media queries.
+-->
+<style>
+  :root {
+    --blue: #043873;
+    --blue-light: #4f9cf9;
+    --yellow: #ffe492;
+    --white: #ffffff;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  .navbar {
+    background-color: var(--blue);
+    padding: 1rem 0;
+  }
+  .logo {
+    height: 34px;
+    width: auto;
+  }
+  .nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+  }
+  .nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 18px;
+  }
+  .nav-buttons .btn {
+    margin-left: 10px;
+  }
+  .nav-arrow {
+    width: 9px;
+    height: 4px;
+    vertical-align: middle;
+  }
+  .hamburger {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 18px;
+  }
+  .btn img {
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    margin-left: 0;
+  }
+  .btn-yellow {
+    background-color: var(--yellow);
+    width: 126px;
+    height: 60px;
+    padding: 16px 40px;
+  }
+  .btn-blue {
+    background-color: var(--blue-light);
+    color: var(--white);
+    width: 219px;
+    height: 63px;
+    padding: 20px;
+  }
+  
+  /* Responsive */
+  @media (min-width: 1920px) {
+    .container {
+      max-width: 1700px;
+    }
+  }
+  @media (min-width: 1440px) {
+    .container {
+      max-width: 1400px;
+    }
+  }
+  @media (max-width: 1240px) {
+    .container {
+      padding: 0 30px;
+    }
+  }
+  @media (max-width: 968px) {
+    .nav-right {
+      gap: 20px;
+    }
+    .nav-links a {
+      margin: 0 10px;
+      font-size: 16px;
+    }
+    .btn {
+      padding: 8px 16px;
+      font-size: 16px;
+    }
+  }
+  @media (max-width: 768px) {
+    .nav-content {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hamburger {
+      display: block;
+    }
+    .nav-right {
+      display: none;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background-color: var(--blue);
+      flex-direction: column;
+      padding: 20px 0;
+      gap: 20px;
+      z-index: 1000;
+    }
+    .nav-right.active {
+      display: flex;
+    }
+    .nav-links {
+      flex-direction: column;
+      gap: 15px;
+    }
+    .nav-buttons {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-buttons .btn {
+      margin-left: 0;
+      width: 80%;
+      height: 45px;
+      padding: 10px 10px;
+      font-size: 16px;
+    }
+  }
+  @media (max-width: 480px) {
+    .container {
+      padding: 0 15px;
+    }
+    .nav-links {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .nav-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      width: 100%;
+    }
+    .nav-buttons .btn {
+      margin-left: 0;
+      width: 80%;
+      height: 50px;
+      padding: 10px 10px;
+      font-size: 16px;
+    }
+  }
+</style>
+
+<!--
+  This script is necessary for the hamburger menu to function on mobile.
+  It's included directly in the section file.
+-->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.querySelector(".hamburger");
+    const navRight = document.querySelector(".nav-right");
+    if (hamburger && navRight) {
+      hamburger.addEventListener("click", () => {
+        navRight.classList.toggle("active");
+      });
+    }
+  });
+</script>
