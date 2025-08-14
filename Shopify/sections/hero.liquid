@@ -53,9 +53,9 @@
 {% endschema %}
 
 <!--
-  The HTML below is a direct conversion of your index.html's hero section.
-  Static content is replaced with Liquid variables.
+  This is the html for the hero section.
 -->
+
 {% assign hero_bg_url = section.settings.background_image | image_url: width: 1920 %}
 <section class="hero" style="background-image: url('{{ hero_bg_url }}');">
   <div class="container hero-grid">
@@ -84,7 +84,6 @@
 
 <!--
   This is the CSS for the hero section.
-  It's a direct copy of your original styles, adapted to work within this section.
   It includes all the necessary media queries.
 -->
 <style>
